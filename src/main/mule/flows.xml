@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="af064dcb-7faa-41e4-944b-d2446c7b03f6" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="flowsFlow" doc:id="87ffb76f-61b5-4b78-8cdc-5cbc76962993" >
+		<http:listener doc:name="Listener" doc:id="09ff11cb-0160-49e0-bb96-904f462c14dd" config-ref="HTTP_Listener_config" path="flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c5c0b55e-2930-4e99-9d53-d46b386d533a" message="process start"/>
+		<set-payload value='#["this is flow project"]' doc:name="Set Payload" doc:id="bba45941-5cdb-48f2-8f15-9c5499bd186f" />
+		<flow-ref doc:name="flowsSub_Flow" doc:id="b2015f34-34c3-48ef-af5f-ce0bf0a71a58" name="flowsSub_Flow"/>
+		<flow-ref doc:name="pf" doc:id="abab70d1-8d9e-4e6c-bca3-0f0835ace86c" name="pf"/>
+		<logger level="INFO" doc:name="Logger" doc:id="40e97a39-977a-4899-9cd9-d10cf4fdb03f" message="process completed"/>
+	</flow>
+	<sub-flow name="flowsSub_Flow" doc:id="66d82c2f-2b3c-4ad0-a710-468e2e878f17" >
+		<set-payload value='#["this is flows project"]' doc:name="Set Payload" doc:id="f7e96e53-37a8-4952-965a-db352ee682dc" />
+		<logger level="INFO" doc:name="Logger" doc:id="6ed3bf18-14d1-4e00-9a59-0d3d8fb1f1d7" message="#[payload]"/>
+	</sub-flow>
+	<flow name="pf" doc:id="c8c9527d-27be-4e4e-af48-fbcde3a8b04e" >
+		<set-payload value='#["this is private flow"]' doc:name="Set Payload" doc:id="11aca737-9382-4246-8021-d3a00d59b4fa" />
+		<logger level="INFO" doc:name="Logger" doc:id="44926330-6134-4aef-a87a-d26dd9b1be90" message="#[payload]"/>
+	</flow>
+</mule>
